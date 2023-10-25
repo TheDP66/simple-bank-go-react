@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+// Group multiple proto files of the same topic together
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+// option usualy filled with subpackage of rood module (can be find in go.mod) + /pb
+option go_package = "github.com/TheDP66/go-grpc-react/server/pb";
+
+message User {
+    string username = 1;
+    string full_name = 2;
+    string email = 3;
+    google.protobuf.Timestamp password_change_at = 4;
+    google.protobuf.Timestamp created_at = 5;
+}
