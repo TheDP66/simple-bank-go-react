@@ -16,8 +16,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { alpha, styled } from "@mui/material/styles";
-import React, { useMemo } from "react";
-import { THEME } from "../../const/theme";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { toggleDarkMode } from "../../redux/actions/appAction";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -60,6 +63,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function MainAppBar() {
+  const { app } = useAppSelector(state => state);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -83,19 +90,6 @@ export default function MainAppBar() {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  const [mode, setMode] = React.useState<"light" | "dark">("light");
-
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    []
-  );
-
-  const theme = useMemo(() => THEME({ mode }), [mode]);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -139,10 +133,10 @@ export default function MainAppBar() {
       <MenuItem>
         <IconButton
           sx={{ ml: 1 }}
-          onClick={colorMode.toggleColorMode}
+          onClick={() => dispatch(toggleDarkMode(!app.darkMode))}
           color="inherit"
         >
-          {theme.palette.mode === "dark" ? (
+          {app.darkMode ? (
             <Brightness7Icon />
           ) : (
             <Brightness4Icon />
@@ -218,10 +212,10 @@ export default function MainAppBar() {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               sx={{ ml: 1 }}
-              onClick={colorMode.toggleColorMode}
+              onClick={() => dispatch(toggleDarkMode(!app.darkMode))}
               color="inherit"
             >
-              {theme.palette.mode === "dark" ? (
+              {app.darkMode ? (
                 <Brightness7Icon />
               ) : (
                 <Brightness4Icon />
@@ -231,6 +225,7 @@ export default function MainAppBar() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={() => navigate("/login")}
             >
               <Badge badgeContent={4} color="error">
                 <MailIcon />

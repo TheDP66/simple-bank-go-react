@@ -1,30 +1,17 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, ThemeProvider } from "@mui/material";
 import { SnackbarKey, SnackbarProvider, useSnackbar } from "notistack";
-import { createContext, useMemo, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { THEME } from "./const/theme";
+import { useAppSelector } from "./hooks/useAppSelector";
 import BaseLayout from "./layout/BaseLayout";
 import CleanLayout from "./layout/CleanLayout";
 import CommonLayout from "./layout/CommonLayout";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 
-const ColorModeContext = createContext({ toggleColorMode: () => {} });
-
 function App() {
-  const [mode, setMode] = useState<"light" | "dark">("light");
-
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    []
-  );
-
-  const theme = useMemo(() => THEME({ mode }), [mode]);
+  const { app } = useAppSelector((state) => state);
 
   const SnackbarCloseButton = ({
     snackbarKey,
@@ -41,36 +28,34 @@ function App() {
   };
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <SnackbarProvider
-          preventDuplicate
-          maxSnack={3}
-          action={(snackbarKey: SnackbarKey) => (
-            <SnackbarCloseButton snackbarKey={snackbarKey} />
-          )}
-        >
-          <BrowserRouter>
-            <Routes>
-              <Route element={<BaseLayout />}>
-                <Route element={<CleanLayout />}>
-                  <Route
-                    element={<Login theme={theme} colorMode={colorMode} />}
-                    path="/login"
-                  />
-                </Route>
-
-                <Route element={<CommonLayout />}>
-                  <Route element={<Dashboard />} path="/" />
-                </Route>
-
-                <Route element={<div>404 | Not Found</div>} path="*" />
+    <ThemeProvider theme={THEME({ isDarkMode: app.darkMode })}>
+      <SnackbarProvider
+        preventDuplicate
+        maxSnack={3}
+        action={(snackbarKey: SnackbarKey) => (
+          <SnackbarCloseButton snackbarKey={snackbarKey} />
+        )}
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route element={<BaseLayout />}>
+              <Route element={<CleanLayout />}>
+                <Route
+                  element={<Login />}
+                  path="/login"
+                />
               </Route>
-            </Routes>
-          </BrowserRouter>
-        </SnackbarProvider>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+
+              <Route element={<CommonLayout />}>
+                <Route element={<Dashboard />} path="/" />
+              </Route>
+
+              <Route element={<div>404 | Not Found</div>} path="*" />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </SnackbarProvider>
+    </ThemeProvider>
   );
 }
 

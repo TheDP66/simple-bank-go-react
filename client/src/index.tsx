@@ -7,6 +7,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import ReduxProvider from "./redux/store";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
@@ -15,8 +16,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <CssBaseline enableColorScheme />
-    <App />
+    <ReduxProvider>
+      <CssBaseline enableColorScheme />
+      <App />
+    </ReduxProvider>
   </React.StrictMode>
 );
 

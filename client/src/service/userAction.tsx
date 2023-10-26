@@ -1,8 +1,8 @@
-import { serverService } from "../util/server";
+import { grpcService } from "../util/grpc";
 
 export const createUser = async () => {
   try {
-    const res = await serverService().createUser({
+    const res = await grpcService().createUser({
       email: "user99@email.com",
       fullName: "User Name",
       password: "secret",

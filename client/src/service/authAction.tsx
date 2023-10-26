@@ -1,5 +1,5 @@
 import { EnqueueSnackbar } from "notistack";
-import { serverService } from "../util/server";
+import { grpcService } from "../util/grpc";
 
 export const loginUser = async ({
   enqueueSnackbar,
@@ -7,14 +7,14 @@ export const loginUser = async ({
   enqueueSnackbar: EnqueueSnackbar;
 }) => {
   try {
-    const res = await serverService().loginUser({
+    const res = await grpcService().loginUser({
       username: "user99",
       password: "secret",
     });
 
     console.log("res", res);
-  } catch (err: any) {
-    enqueueSnackbar(err.message, {
+  } catch (error: any) {
+    enqueueSnackbar(error.message, {
       variant: "error",
       anchorOrigin: { vertical: "top", horizontal: "right" },
     });

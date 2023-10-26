@@ -1,13 +1,13 @@
 import { createTheme, darkScrollbar } from "@mui/material";
 
-type ITHEME = {
-  mode: "light" | "dark";
+type TTHEME = {
+  isDarkMode: boolean;
 };
 
-export const THEME = (props: ITHEME) =>
+export const THEME = (props: TTHEME) =>
   createTheme({
     palette: {
-      mode: props.mode,
+      mode: props.isDarkMode ? "dark" : "light",
       primary: {
         main: "#B2A4FF",
       },
