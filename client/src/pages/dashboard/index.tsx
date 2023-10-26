@@ -1,7 +1,9 @@
+import { Container } from "@mui/material";
+
 type Props = {};
 
 const Dashboard = (props: Props) => {
-  return <div>Dashboard</div>;
+  return <Container maxWidth="md">Dashboard</Container>;
 };
 
 export default Dashboard;

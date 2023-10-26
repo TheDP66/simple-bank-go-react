@@ -1,18 +1,20 @@
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import MainAppBar from "./components/MainAppBar";
 
 type Props = {};
 
 const BaseLayout = (props: Props) => {
   return (
-    <>
-      <MainAppBar />
-
-      <Container maxWidth="xl">
-        <Outlet />
-      </Container>
-    </>
+    <Box
+      sx={{
+        width: "100vw",
+        minHeight: "100vh",
+        bgcolor: "background.default",
+        color: "text.primary",
+      }}
+    >
+      <Outlet />
+    </Box>
   );
 };
 

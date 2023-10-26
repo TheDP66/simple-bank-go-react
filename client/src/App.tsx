@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { THEME } from "./const/theme";
 import BaseLayout from "./layout/BaseLayout";
 import CleanLayout from "./layout/CleanLayout";
+import CommonLayout from "./layout/CommonLayout";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 
@@ -51,18 +52,20 @@ function App() {
         >
           <BrowserRouter>
             <Routes>
-              <Route element={<CleanLayout />}>
-                <Route
-                  element={<Login theme={theme} colorMode={colorMode} />}
-                  path="/login"
-                />
-              </Route>
-
               <Route element={<BaseLayout />}>
-                <Route element={<Dashboard />} path="/" />
-              </Route>
+                <Route element={<CleanLayout />}>
+                  <Route
+                    element={<Login theme={theme} colorMode={colorMode} />}
+                    path="/login"
+                  />
+                </Route>
 
-              <Route element={<div>404 | Not Found</div>} path="*" />
+                <Route element={<CommonLayout />}>
+                  <Route element={<Dashboard />} path="/" />
+                </Route>
+
+                <Route element={<div>404 | Not Found</div>} path="*" />
+              </Route>
             </Routes>
           </BrowserRouter>
         </SnackbarProvider>
