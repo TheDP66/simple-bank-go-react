@@ -1,6 +1,8 @@
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { Button, Container, IconButton, Theme } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 import { loginUser } from "../../service/authAction";
 import { createUser } from "../../service/userAction";
 
@@ -10,6 +12,15 @@ type Props = {
 };
 
 const Login = (props: Props) => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    enqueueSnackbar("err", {
+      variant: "error",
+      anchorOrigin: { vertical: "top", horizontal: "right" },
+    });
+  }, []);
+
   return (
     <Container
       maxWidth="sm"
@@ -18,7 +29,10 @@ const Login = (props: Props) => {
         color: "text.primary",
       }}
     >
-      <Button onClick={loginUser} variant="contained">
+      <Button
+        onClick={() => loginUser({ enqueueSnackbar })}
+        variant="contained"
+      >
         gRPC Login
       </Button>
       <Button onClick={createUser} color="secondary">

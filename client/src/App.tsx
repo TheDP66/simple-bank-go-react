@@ -4,7 +4,6 @@ import { SnackbarKey, SnackbarProvider, useSnackbar } from "notistack";
 import { createContext, useMemo, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { THEME } from "./const/theme";
-import SnackbarContextProvider from "./context/SnackbarContextProvider";
 import BaseLayout from "./layout/BaseLayout";
 import CleanLayout from "./layout/CleanLayout";
 import Dashboard from "./pages/dashboard";
@@ -43,33 +42,30 @@ function App() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <SnackbarContextProvider>
-          <SnackbarProvider
-            preventDuplicate
-            maxSnack={3}
-            action={(snackbarKey: SnackbarKey) => (
-              <SnackbarCloseButton snackbarKey={snackbarKey} />
-            )}
-          >
-            <BrowserRouter>
-              <Routes>
-                <Route element={<CleanLayout />} path="/">
-                  <Route
-                    element={<Login theme={theme} colorMode={colorMode} />}
-                    path="/login"
-                  />
-                  <Route element={<Dashboard />} path="/" />
-                </Route>
+        <SnackbarProvider
+          preventDuplicate
+          maxSnack={3}
+          action={(snackbarKey: SnackbarKey) => (
+            <SnackbarCloseButton snackbarKey={snackbarKey} />
+          )}
+        >
+          <BrowserRouter>
+            <Routes>
+              <Route element={<CleanLayout />}>
+                <Route
+                  element={<Login theme={theme} colorMode={colorMode} />}
+                  path="/login"
+                />
+              </Route>
 
-                <Route element={<BaseLayout />} path="/">
-                  <Route element={<Dashboard />} path="/" />
-                </Route>
+              <Route element={<BaseLayout />}>
+                <Route element={<Dashboard />} path="/" />
+              </Route>
 
-                <Route element={<div>404 | Not Found</div>} path="*" />
-              </Routes>
-            </BrowserRouter>
-          </SnackbarProvider>
-        </SnackbarContextProvider>
+              <Route element={<div>404 | Not Found</div>} path="*" />
+            </Routes>
+          </BrowserRouter>
+        </SnackbarProvider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
