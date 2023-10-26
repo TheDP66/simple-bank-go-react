@@ -132,7 +132,15 @@ func runGrpcClient(config util.Config, store db.Store, taskDistributor worker.Ta
 	if err != nil {
 		log.Fatal().Err(err).Msg("cannot create client fs")
 	}
-	http.Handle("/", http.FileServer(http.FS(distFS)))
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "client/build/index.html")
+	})
+
+	buildHandler := http.FileServer(http.FS(distFS))
+	http.Handle("/static/", buildHandler)
+	http.Handle("/js/", buildHandler)
+	http.Handle("/css/", buildHandler)
 
 	log.Info().Msgf("start gRPC client at %s", "[::]:9091")
 	if err := http.ListenAndServe(":9091", nil); err != nil {
