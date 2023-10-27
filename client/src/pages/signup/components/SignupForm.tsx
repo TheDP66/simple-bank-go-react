@@ -7,21 +7,25 @@ import * as yup from "yup";
 import FormText from "../../../components/FormText";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
-import { loginUser } from "../../../redux/actions/authAction";
+import { createUser } from "../../../redux/actions/authAction";
 
 const INITIAL_VALUES = {
   username: "",
+  fullName: "",
   password: "",
+  email: "",
 };
 
 const VALIDATION_SCHEMES = yup.object({
-  username: yup.string().min(3).required("field is required"),
-  password: yup.string().required("field is required"),
+  username: yup.string().min(3).max(100).required("field is required"),
+  fullName: yup.string().min(3).max(100).required("field is required"),
+  email: yup.string().email().min(3).max(200).required("field is required"),
+  password: yup.string().min(6).max(100).required("field is required"),
 });
 
 type Props = {};
 
-const LoginForm = (props: Props) => {
+const SignUpForm = (props: Props) => {
   const { app } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -33,7 +37,7 @@ const LoginForm = (props: Props) => {
     onSubmit: async (values) => {
       setLoading(true);
 
-      dispatch(loginUser(values, enqueueSnackbar));
+      dispatch(createUser(values, enqueueSnackbar));
 
       setLoading(false);
     },
@@ -61,6 +65,15 @@ const LoginForm = (props: Props) => {
 
         <FormText
           formik={formik}
+          label="Full name"
+          name="fullName"
+          type="text"
+        />
+
+        <FormText formik={formik} label="Email" name="email" type="email" />
+
+        <FormText
+          formik={formik}
           label="Password"
           name="password"
           type="password"
@@ -75,11 +88,11 @@ const LoginForm = (props: Props) => {
           variant="contained"
           size="small"
         >
-          Sign in
+          Sign up
         </LoadingButton>
       </form>
     </Paper>
   );
 };
 
-export default LoginForm;
+export default SignUpForm;
