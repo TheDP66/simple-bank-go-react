@@ -9,6 +9,7 @@ import CleanLayout from "./layout/CleanLayout";
 import CommonLayout from "./layout/CommonLayout";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
+import Signup from "./pages/signup";
 
 function App() {
   const { app } = useAppSelector((state) => state);
@@ -40,10 +41,8 @@ function App() {
           <Routes>
             <Route element={<BaseLayout />}>
               <Route element={<CleanLayout />}>
-                <Route
-                  element={<Login />}
-                  path="/login"
-                />
+                <Route element={<Login />} path="/login" />
+                <Route element={<Signup />} path="/signup" />
               </Route>
 
               <Route element={<CommonLayout />}>

@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { toggleDarkMode } from "../../redux/actions/appAction";
-import LoginForm from "./components/LoginForm";
+import SignUpForm from "./components/SignupForm";
 
 type Props = {};
 
-const Login = (props: Props) => {
+const Signup = (props: Props) => {
   const { app } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
@@ -30,9 +30,9 @@ const Login = (props: Props) => {
         marginTop="21px"
         fontWeight="normal"
       >
-        Sign in to APP_NAME
+        Sign up to APP_NAME
       </Typography>
-      <LoginForm />
+      <SignUpForm />
       <Paper
         sx={{
           padding: "16px",
@@ -48,21 +48,21 @@ const Login = (props: Props) => {
         }}
         elevation={0}
       >
-        New to APP_NAME?{" "}
+        Already have an account?{" "}
         <Link
           style={{
             color: "rgb(47, 129, 247)",
             cursor: "pointer",
             textDecoration: "none",
           }}
-          to={"/signup"}
+          to={"/login"}
         >
-          Create an account
+          Sign in
         </Link>
       </Paper>
 
       <IconButton
-        sx={{ mt: 9, opacity: 0.6 }}
+        sx={{ my: 9, opacity: 0.6 }}
         onClick={() => dispatch(toggleDarkMode(!app.darkMode))}
         color="inherit"
         size="small"
@@ -73,4 +73,4 @@ const Login = (props: Props) => {
   );
 };
 
-export default Login;
+export default Signup;

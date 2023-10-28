@@ -9,10 +9,10 @@ export const THEME = (props: TTHEME) =>
     palette: {
       mode: props.isDarkMode ? "dark" : "light",
       primary: {
-        main: "#B2A4FF",
+        main: "#238636",
       },
       secondary: {
-        main: "#FFB4B4",
+        main: "#EA9010",
       },
     },
     components: {

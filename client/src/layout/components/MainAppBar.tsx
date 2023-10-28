@@ -63,7 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function MainAppBar() {
-  const { app } = useAppSelector(state => state);
+  const { app } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -136,11 +136,7 @@ export default function MainAppBar() {
           onClick={() => dispatch(toggleDarkMode(!app.darkMode))}
           color="inherit"
         >
-          {app.darkMode ? (
-            <Brightness7Icon />
-          ) : (
-            <Brightness4Icon />
-          )}
+          {app.darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
       </MenuItem>
       <MenuItem>
@@ -211,15 +207,11 @@ export default function MainAppBar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
-              sx={{ ml: 1 }}
+              size="large"
               onClick={() => dispatch(toggleDarkMode(!app.darkMode))}
               color="inherit"
             >
-              {app.darkMode ? (
-                <Brightness7Icon />
-              ) : (
-                <Brightness4Icon />
-              )}
+              {app.darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
             <IconButton
               size="large"
